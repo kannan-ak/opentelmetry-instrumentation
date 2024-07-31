@@ -1,0 +1,64 @@
+Controlled By:  ReplicaSet/conflict-k8s-auto-flask-weather-app-86475558f8
+Containers:
+  flask-app:
+    Container ID:   docker://9d7faf299f2547c882829d8c97e9bdaeb5746f48abb3206479c734ba4e48614c
+    Image:          weather-app-auto:v6
+    Image ID:       docker://sha256:b53a69e7cf5df707893939e457d9e8cd8a50870e427d26299db7abe8a3da5f6e
+    Port:           5000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Wed, 12 Jun 2024 23:15:12 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT:  http://jaeger:4317
+      OTEL_RESOURCE_ATTRIBUTES:     service.name=conflict-k8s-flask-weather-app
+      OTEL_TRACES_EXPORTER:         console,otlp
+      OTEL_EXPORTER_OTLP_INSECURE:  true
+      OTEL_METRICS_EXPORTER:        none
+      VAULT_ADDR:                   http://vault:8200
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mf9v6 (ro)
+
+
+Init Containers:
+  opentelemetry-auto-instrumentation-python:
+    Container ID:  docker://9ab7c3f52cf0b1b0ab5e0ee67b07fa592f90aade957085593c02ccd35173c64a
+    Image:         ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.45b0
+    Image ID:      docker-pullable://ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python@sha256:3ed1122e10375d527d84c826728f75322d614dfeed7c3a8d2edd0d391d0e7973
+    Port:          <none>
+    Host Port:     <none>
+    Command:l
+      cp
+      -r
+      /autoinstrumentation/.
+      /otel-auto-instrumentation-python
+    Environment:  <none>
+    Mounts:
+      /otel-auto-instrumentation-python from opentelemetry-auto-instrumentation-python (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-8lqhc (ro)
+Containers:
+  flask-app:
+    Container ID:   docker://a9193102662c52940f7e9b20dc5a34b811465ce6e23d8d8bb60a636b38721949
+    Image:          weather-app-auto:v6
+    ......
+    Restart Count:  0
+    Environment:
+      OTEL_NODE_IP:                          (v1:status.hostIP)
+      OTEL_POD_IP:                           (v1:status.podIP)
+      OTEL_EXPORTER_OTLP_ENDPOINT:          http://jaeger:4317
+      OTEL_TRACES_EXPORTER:                 console,otlp
+      OTEL_EXPORTER_OTLP_INSECURE:          true
+      OTEL_METRICS_EXPORTER:                none
+      VAULT_ADDR:                           http://vault:8200
+      PYTHONPATH:                           /otel-auto-instrumentation-python/opentelemetry/instrumentation/auto_instrumentation:/otel-auto-instrumentation-python
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL:   http/protobuf
+      OTEL_EXPORTER_OTLP_METRICS_PROTOCOL:  http/protobuf
+      OTEL_SERVICE_NAME:                    conflict-k8s-auto-flask-weather-app
+      OTEL_RESOURCE_ATTRIBUTES_POD_NAME:    conflict-k8s-auto-flask-weather-app-6f746dd98f-88gp6 (v1:metadata.name)
+      OTEL_RESOURCE_ATTRIBUTES_NODE_NAME:    (v1:spec.nodeName)
+      OTEL_PROPAGATORS:                     tracecontext,baggage,b3
+      OTEL_RESOURCE_ATTRIBUTES:             service.name=conflict-k8s-flask-weather-app,k8s.container.name=flask-app,k8s.deployment.name=conflict-k8s-auto-flask-weather-app,k8s.namespace.name=default,k8s.node.name=$(OTEL_RESOURCE_ATTRIBUTES_NODE_NAME),k8s.pod.name=$(OTEL_RESOURCE_ATTRIBUTES_POD_NAME),k8s.replicaset.name=conflict-k8s-auto-flask-weather-app-6f746dd98f,service.instance.id=default.$(OTEL_RESOURCE_ATTRIBUTES_POD_NAME).flask-app,service.version=v6
+    Mounts:
+      /otel-auto-instrumentation-python from opentelemetry-auto-instrumentation-python (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-8lqhc (ro)      

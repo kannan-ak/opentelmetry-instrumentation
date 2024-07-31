@@ -1,0 +1,10 @@
+pip install opentelemetry-distro opentelemetry-exporter-otlp
+opentelemetry-bootstrap -a install
+
+opentelemetry-instrument \
+    --traces_exporter console,otlp \
+    --service_name auto-flask-weather-app \
+    --exporter_otlp_endpoint 0.0.0.0:4317 \
+    --exporter_otlp_insecure true \
+    --metrics_exporter none \
+    python3 auto_app.py

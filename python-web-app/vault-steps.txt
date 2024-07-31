@@ -1,0 +1,21 @@
+## Steps for vault setup
+
+# Spin up vault container
+docker run --cap-add=IPC_LOCK -d --name=dev-vault -e VAULT_DEV_ROOT_TOKEN_ID="myvault"  -p 8200:8200 hashicorp/vault
+
+
+# Exec into vault
+docker exec -it dev-vault /bin/sh
+
+# Update vault addr to http
+export VAULT_ADDR='http://127.0.0.1:8200'
+
+# login
+vault login myvault
+
+# Add secret
+vault kv put secret/weather-app api_key="7abd0dca65b8c774e4da352fc178e90e"
+
+# Verify secret
+vault kv get secret/weather-app
+

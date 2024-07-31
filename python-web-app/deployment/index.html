@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <form method="POST" action="/">
+        <label for="city">Enter city name:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather_data %}
+        {% if 'error' in weather_data %}
+            <p>{{ weather_data.error }}</p>
+        {% else %}
+            <h2>Weather in {{ weather_data.name }}</h2>
+            <p>Temperature: {{ weather_data.main.temp }}°C</p>
+            <p>Weather: {{ weather_data.weather[0].description }}</p>
+        {% endif %}
+    {% endif %}
+
+    <h2>Recent Searches</h2>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>City</th>
+            <th>Temperature</th>
+            <th>Description</th>
+        </tr>
+        {% for search in recent_searches %}
+        <tr>
+            <td>{{ search[0] }}</td>
+            <td>{{ search[1] }}</td>
+            <td>{{ search[2] }}°C</td>
+            <td>{{ search[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

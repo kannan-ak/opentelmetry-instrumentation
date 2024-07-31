@@ -1,0 +1,29 @@
+# Use an official Python runtime as a parent image
+FROM python:3.9
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Install OpenTelemetry packages
+RUN pip install opentelemetry-distro opentelemetry-exporter-otlp
+RUN opentelemetry-bootstrap -a install
+    
+    
+# # Copy entrypoint script
+# COPY entrypoint.sh /app/entrypoint.sh
+
+# Expose port 5000 for Flask app
+EXPOSE 5000
+
+# Run the command to start the Flask app using OpenTelemetry instrumentation
+ENTRYPOINT ["/bin/sh", "-c"]
+CMD ["opentelemetry-instrument python app.py"]
+
+# # Use entrypoint script to ensure OpenTelemetry is used to instrument the application
+# ENTRYPOINT ["/app/entrypoint.sh"]

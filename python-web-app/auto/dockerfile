@@ -1,0 +1,17 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY . /app/
+
+RUN pip install -r requirements.txt
+
+EXPOSE 5000
+
+ENV OTEL_RESOURCE_ATTRIBUTES=service.name=auto-flask-weather-app
+ENV OTEL_TRACES_EXPORTER=otlp
+ENV OTEL_EXPORTER_OTLP_ENDPOINT=http://0.0.0.0:4317
+ENV OTEL_EXPORTER_OTLP_INSECURE=true
+ENV OTEL_METRICS_EXPORTER=none
+
+CMD ["opentelemetry-instrument", "python", "auto_app.py"]

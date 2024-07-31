@@ -1,0 +1,41 @@
+Operator steps
+
+Install certmanager
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+
+
+Install opentelemetry-Operator
+kubectl apply -f https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml
+
+Things installed as part of the operator
+
+Namespace
+namespace/opentelemetry-operator-system 
+
+CRDs
+customresourcedefinition.apiextensions.k8s.io/instrumentations.opentelemetry.io 
+customresourcedefinition.apiextensions.k8s.io/opampbridges.opentelemetry.io 
+customresourcedefinition.apiextensions.k8s.io/opentelemetrycollectors.opentelemetry.io 
+
+Service account and RBAC
+serviceaccount/opentelemetry-operator-controller-manager 
+role.rbac.authorization.k8s.io/opentelemetry-operator-leader-election-role 
+clusterrole.rbac.authorization.k8s.io/opentelemetry-operator-manager-role 
+clusterrole.rbac.authorization.k8s.io/opentelemetry-operator-metrics-reader 
+clusterrole.rbac.authorization.k8s.io/opentelemetry-operator-proxy-role 
+rolebinding.rbac.authorization.k8s.io/opentelemetry-operator-leader-election-rolebinding 
+clusterrolebinding.rbac.authorization.k8s.io/opentelemetry-operator-manager-rolebinding 
+clusterrolebinding.rbac.authorization.k8s.io/opentelemetry-operator-proxy-rolebinding 
+
+Collector deployment
+service/opentelemetry-operator-controller-manager-metrics-service 
+service/opentelemetry-operator-webhook-service 
+deployment.apps/opentelemetry-operator-controller-manager 
+
+Certs
+certificate.cert-manager.io/opentelemetry-operator-serving-cert 
+issuer.cert-manager.io/opentelemetry-operator-selfsigned-issuer 
+
+Webhooks
+mutatingwebhookconfiguration.admissionregistration.k8s.io/opentelemetry-operator-mutating-webhook-configuration 
+validatingwebhookconfiguration.admissionregistration.k8s.io/opentelemetry-operator-validating-webhook-configuration 
