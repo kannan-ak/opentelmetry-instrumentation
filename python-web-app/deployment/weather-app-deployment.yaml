@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: weather-app-test:v3
+        image: weather-app-test:v1
         ports:
         - containerPort: 5000
         env:

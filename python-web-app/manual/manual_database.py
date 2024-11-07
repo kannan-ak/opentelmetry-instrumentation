@@ -8,7 +8,7 @@ tracer = trace.get_tracer(__name__)
 
 def init_db():
     with tracer.start_as_current_span("init_db"):
-        # time.sleep(2)
+        time.sleep(5)
         conn = sqlite3.connect('search_history.db')
         cursor = conn.cursor()
         cursor.execute('''

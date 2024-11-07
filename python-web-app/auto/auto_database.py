@@ -19,7 +19,7 @@ def init_db():
     conn.close()
 
 def add_search(city, temperature, description):   
-    time.sleep(2)
+    time.sleep(5)
     conn = sqlite3.connect('search_history.db')
     cursor = conn.cursor()     
     cursor.execute('''
